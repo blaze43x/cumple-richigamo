@@ -36,7 +36,7 @@ body {
 
 body {
   display: grid;
-  grid-template-rows: minmax(0, 1fr) 78px;
+  grid-template-rows: minmax(0, 1fr) 90px;
   overflow: hidden;
   background: var(--obs-bg);
   color: var(--obs-text);
@@ -640,7 +640,7 @@ svg {
   gap: 8px;
   overflow: hidden;
   list-style: none;
-  padding: 8px;
+  padding: 10px;
 }
 
 .list-item {
@@ -649,12 +649,12 @@ svg {
   align-items: center;
   justify-content: center;
   height: auto;
-  padding: 0 12px;
+  padding: 0 14px;
   border: 1px solid #1d1f26;
   border-radius: 6px;
   background: var(--obs-title);
   color: #ffffff;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
   text-align: center;
@@ -945,13 +945,23 @@ svg {
     transform-origin: center;
   }
 
+  .preview {
+    padding: 12px 12px 10px;
+  }
+
+  .scene-panel {
+    justify-content: flex-start;
+    padding: 22px 14px 20px;
+    gap: 14px;
+  }
+
   .video-frame,
   .scene-card {
-    width: 92%;
+    width: 100%;
   }
 
   .scene-card {
-    padding: 12px 14px;
+    padding: 16px 16px 18px;
   }
 
   .scene-text {
@@ -961,7 +971,8 @@ svg {
 
   .letter-grid {
     grid-template-columns: 1fr;
-    width: 94%;
+    width: 100%;
+    gap: 12px;
   }
 
   .list {
