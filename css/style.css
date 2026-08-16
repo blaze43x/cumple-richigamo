@@ -281,6 +281,7 @@ svg {
 .preview {
   position: relative;
   flex: 1;
+  min-height: 0;
   overflow: hidden;
   border: 1px solid #13141a;
   background: var(--obs-canvas);
@@ -399,21 +400,43 @@ svg {
 .b28 { top: 54%; left: 86%; background: #6ea8ff; color: #6ea8ff; width: 38px; height: 48px; }
 
 .scene-panel {
+  position: absolute;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #9147ff #1d1f26;
+}
+
+.scene-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scene-panel::-webkit-scrollbar-track {
+  background: #1d1f26;
+}
+
+.scene-panel::-webkit-scrollbar-thumb {
+  background: #9147ff;
+  border-radius: 8px;
+}
+
+.scene-body {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  overflow: auto;
-  padding: 14px 16px 8px;
   gap: 12px;
+  width: 100%;
+  min-height: 100%;
+  padding: 24px 20px 40px;
 }
 
-.scene-panel::after {
-  content: "";
-  flex: 0 0 36px;
-  width: 100%;
-  height: 36px;
+.scene-body > * {
+  flex-shrink: 0;
 }
 
 .video-frame {
@@ -895,6 +918,7 @@ svg {
   html,
   body {
     height: 100dvh;
+    overflow: hidden;
   }
 
   body {
@@ -905,8 +929,9 @@ svg {
       "info"
       "chat";
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(280px, 46dvh) auto auto minmax(160px, 1fr);
-    overflow: auto;
+    grid-template-rows: minmax(220px, 42dvh) min-content minmax(120px, 1fr) 168px;
+    gap: 4px;
+    overflow: hidden;
     padding:
       max(4px, env(safe-area-inset-top))
       max(4px, env(safe-area-inset-right))
@@ -919,12 +944,45 @@ svg {
     padding: 0;
   }
 
-  .info-dock { grid-area: info; }
-  .preview-wrap { grid-area: preview; min-height: 280px; }
-  .chat-dock { grid-area: chat; min-height: 160px; }
-  .docks { grid-area: scenes; padding: 4px 0; }
+  .info-dock {
+    grid-area: info;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .preview-wrap { grid-area: preview; min-height: 0; }
+  .chat-dock {
+    grid-area: chat;
+    height: 168px;
+    min-height: 168px;
+    max-height: 168px;
+    overflow: hidden;
+  }
+  .docks {
+    grid-area: scenes;
+    min-height: min-content;
+    padding: 0;
+  }
+
+  .docks .dock {
+    width: 100%;
+    height: auto;
+    min-height: 152px;
+    overflow: hidden;
+  }
+
+  .list {
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    gap: 8px;
+    overflow: hidden;
+    height: auto;
+    padding: 10px;
+  }
 
   .se-body {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
     padding: 10px;
   }
 
@@ -960,18 +1018,13 @@ svg {
   }
 
   .preview {
-    padding: 12px 12px 16px;
+    padding: 0;
   }
 
-  .scene-panel {
+  .scene-body {
     justify-content: flex-start;
-    padding: 22px 14px 8px;
     gap: 14px;
-  }
-
-  .scene-panel::after {
-    flex-basis: 40px;
-    height: 40px;
+    padding: 22px 14px 48px;
   }
 
   .video-frame,
@@ -994,16 +1047,10 @@ svg {
     gap: 12px;
   }
 
-  .list {
-    flex-wrap: wrap;
-    gap: 6px;
-    padding: 8px;
-  }
-
   .list-item {
-    flex: 1 1 calc(50% - 6px);
-    min-height: 44px;
-    padding: 8px 6px;
+    flex: 1 1 calc(50% - 8px);
+    min-height: 48px;
+    padding: 8px 8px;
     font-size: 13px;
     line-height: 1.2;
   }
@@ -1015,7 +1062,13 @@ svg {
 
 @media (max-width: 900px) and (orientation: landscape) {
   body {
-    grid-template-rows: minmax(200px, 1fr) auto auto minmax(120px, 0.7fr);
+    grid-template-rows: minmax(180px, 1fr) min-content minmax(90px, 0.8fr) 132px;
+  }
+
+  .chat-dock {
+    height: 132px;
+    min-height: 132px;
+    max-height: 132px;
   }
 
   .preview-wrap {

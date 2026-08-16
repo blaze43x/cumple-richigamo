@@ -16,6 +16,7 @@ function mostrarEscena(id) {
     const visible = panel.dataset.panel === id;
     panel.classList.toggle("hidden", !visible);
     if (!visible) return;
+    panel.scrollTop = 0;
     panel.querySelectorAll("iframe[data-src]").forEach((frame) => {
       frame.src = frame.dataset.src;
     });
