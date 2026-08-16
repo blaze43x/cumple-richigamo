@@ -1,8 +1,7 @@
 const intro = document.getElementById("intro");
-const sceneItems = document.querySelectorAll("#scenes .list-item");
+const scenes = document.getElementById("scenes");
 const scenePanels = document.querySelectorAll(".scene-panel");
 const chatLog = document.getElementById("chat-log");
-const chatInput = document.getElementById("chat-input");
 
 function detenerEmbeds() {
   document.querySelectorAll("iframe[data-src]").forEach((frame) => {
@@ -12,7 +11,7 @@ function detenerEmbeds() {
 
 function mostrarEscena(id) {
   detenerEmbeds();
-  intro.classList.add("hidden");
+  if (intro) intro.classList.add("hidden");
   scenePanels.forEach((panel) => {
     const visible = panel.dataset.panel === id;
     panel.classList.toggle("hidden", !visible);
@@ -23,25 +22,33 @@ function mostrarEscena(id) {
   });
 }
 
-sceneItems.forEach((item) => {
-  item.addEventListener("click", () => {
-    sceneItems.forEach((escena) => escena.classList.remove("active"));
-    item.classList.add("active");
-    mostrarEscena(item.dataset.scene);
-  });
-});
-
-chatInput.addEventListener("keydown", (event) => {
-  if (event.key !== "Enter") return;
-
-  const texto = chatInput.value.trim();
-  if (!texto) return;
+function anunciarEscena(nombre) {
+  if (!chatLog) return;
 
   const linea = document.createElement("p");
-  linea.className = "chat-line";
-  linea.innerHTML = "<b>tú:</b> ";
-  linea.append(document.createTextNode(texto));
+  linea.className = "chat-line chat-scene";
+
+  const nick = document.createElement("b");
+  nick.textContent = "richigamo18";
+
+  linea.append(nick, document.createTextNode(` cambió a ${nombre}`));
   chatLog.appendChild(linea);
   chatLog.scrollTop = chatLog.scrollHeight;
-  chatInput.value = "";
-});
+}
+
+if (scenes) {
+  scenes.addEventListener("click", (event) => {
+    const item = event.target.closest(".list-item");
+    if (!item || !scenes.contains(item)) return;
+    if (item.classList.contains("active")) return;
+
+    scenes.querySelectorAll(".list-item").forEach((escena) => {
+      escena.classList.remove("active");
+    });
+    item.classList.add("active");
+
+    const nombre = item.textContent.trim();
+    anunciarEscena(nombre);
+    mostrarEscena(item.dataset.scene);
+  });
+}

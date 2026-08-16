@@ -494,10 +494,6 @@ svg {
   line-height: 1.5;
 }
 
-.letter-grid .scene-card:last-child {
-  grid-column: 1 / -1;
-}
-
 .handle {
   position: absolute;
   width: 7px;
@@ -547,6 +543,8 @@ svg {
 }
 
 .chat-dock {
+  display: flex;
+  flex-direction: column;
   background: var(--se-bg);
 }
 
@@ -570,6 +568,7 @@ svg {
 
 .chat-log {
   flex: 1;
+  min-height: 0;
   overflow: auto;
   padding: 12px;
 }
@@ -586,6 +585,14 @@ svg {
 
 .chat-line b {
   margin-right: 6px;
+  color: #bf94ff;
+}
+
+.chat-scene {
+  color: #ded1ff;
+}
+
+.chat-scene b {
   color: #bf94ff;
 }
 
